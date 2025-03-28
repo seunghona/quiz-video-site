@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Unlock the Video</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    #video {
+      display: none;
+      margin-top: 30px;
+    }
+    #feedback {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Answer the Questions to Unlock the Video</h1>
+
+  <div id="quiz">
+    <p id="question">Loading...</p>
+    <input type="text" id="answer" autocomplete="off" />
+    <button onclick="checkAnswer()">Submit</button>
+    <p id="feedback"></p>
+  </div>
+
+  <div id="video">
+    <h2>Congratulations!</h2>
+    <video width="640" controls>
+      <source src="YOUR_VIDEO_LINK_HERE.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <script>
+    const questions = [
+      { q: "What is 2 + 2?", a: "4" },
+      { q: "What is the capital of France?", a: "paris" },
+      { q: "Spell the word 'freedom' backwards.", a: "modeerf" }
+    ];
+
+    let current = 0;
+
+    function loadQuestion() {
+      document.getElementById('question').textContent = questions[current].q;
+      document.getElementById('answer').value = '';
+      document.getElementById('feedback').textContent = '';
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById('answer').value.trim().toLowerCase();
+      if (input === questions[current].a.toLowerCase()) {
+        current++;
+        if (current < questions.length) {
+          loadQuestion();
+        } else {
+          document.getElementById('quiz').style.display = 'none';
+          document.getElementById('video').style.display = 'block';
+        }
+      } else {
+        document.getElementById('feedback').textContent = 'Wrong answer. Try again!';
+      }
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
